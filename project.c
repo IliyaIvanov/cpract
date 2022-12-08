@@ -4,11 +4,43 @@
 #include <math.h>
 #include <stdlib.h>
 
+//struct xorshift32_state {
+//    uint32_t a;
+//};
+//
+//uint32_t xorshift32(struct xorshift32_state *state) {
+//    uint32_t x = state->a;
+//    x ^= x << 13;
+//    x ^= x >> 17;
+//    x ^= x << 5;
+//    return state->a = x;
+//}
+//
+//struct xorshift32_state *global_state = NULL;
+//
+//int last_max = 0;
+//
+//float rnd(int max) {
+//    if (global_state == NULL) {
+//        global_state = malloc(sizeof(struct xorshift32_state));
+//    }
+//    if (max == 0) {
+//        float value = global_state->a / (float)UINT32_MAX;
+//        return last_max*value;
+//    }
+//    last_max = max;
+//    global_state->a = xorshift32(global_state);
+//    float value = global_state->a / (float)UINT32_MAX;
+//    return value*max;
+//}
+
+struct xorshift32_state* global_state = NULL;
+
 struct xorshift32_state {
     uint32_t a;
 };
 
-uint32_t xorshift32(struct xorshift32_state *state) {
+uint32_t xorshift32(struct xorshift32_state* state) {
     uint32_t x = state->a;
     x ^= x << 13;
     x ^= x >> 17;
@@ -16,22 +48,14 @@ uint32_t xorshift32(struct xorshift32_state *state) {
     return state->a = x;
 }
 
-struct xorshift32_state *global_state = NULL;
-
-int last_max = 0;
-
-float rnd(int max) {
+float rnd(float upper) {
     if (global_state == NULL) {
-        global_state = malloc(sizeof(struct xorshift32_state));
+        int size = sizeof(struct xorshift32_state);
+        struct xorshift32_state* pointer = malloc(size);
+        global_state = pointer;
     }
-    if (max == 0) {
-        float value = global_state->a / (float)UINT32_MAX;
-        return last_max*value;
-    }
-    last_max = max;
     global_state->a = xorshift32(global_state);
-    float value = global_state->a / (float)UINT32_MAX;
-    return value*max;
+    return (global_state->a / (float)UINT32_MAX) * upper;
 }
 
 void tab(int value) {
@@ -41,7 +65,10 @@ void tab(int value) {
 }
 
 int main() {
-    char *Q;
+//    printf("START\n");
+//    printf("%f\n", 80 * rnd(1) + 1);
+//    printf("%f\n", 80 * rnd(1) + 1);
+    char q[5];
     int X = 0;
     int Y = 0;
     int C = 0;
@@ -84,7 +111,7 @@ n38:
 
 //n57:
 
-n58:
+//n58:
     for (int k = 1; k <= 7; k++) {
         for (int j = k; j <= 7; j++){
             X = A[k];
@@ -133,7 +160,6 @@ n88:
         }
     }
 
-n124:
 
 n139:
     printf("%c", 6);
@@ -204,15 +230,17 @@ n246:
 
 n249:
     printf("TYPE 'YES' OR 'NO\n");
-    C = 0;
-    scanf("%s", &Q);
-    if (strcmp (Q, "YES") == 0){
-        goto n38;
-    } else if(strcmp (Q, "NO") == 0){
+    scanf("%s", q);
+    if (strcmp (q, "YES") == 0){
+        C++;
+        if (C == 3) { 
+            goto n299; 
+        } else { 
+            goto n38; 
+        }
+    } else if(strcmp (q, "NO") == 0){
         goto n299;
     }
-    C++;
-    if (C == 3) goto n299;
 
 n261:
     printf("\nYOU CAUGHT %i NUMBERS OUT OF 8--YOU WIN $10.00\n", G);
@@ -236,5 +264,5 @@ n279:
     goto n246;
 
 n299:
-    printf("THAT'S ALL FOR NOW.  PLAY KENO AGAIN, BE SEEING YOU.\n");
+    printf("\nTHAT'S ALL FOR NOW.  PLAY KENO AGAIN, BE SEEING YOU.\n");
 }
