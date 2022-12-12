@@ -46,9 +46,6 @@ void tab(int value) {
 }
 
 int main() {
-//    printf("START\n");
-//    printf("%f\n", 80 * rnd(1) + 1);
-//    printf("%f\n", 80 * rnd(1) + 1);
     char q[5];
     int X = 0;
     int Y = 0;
