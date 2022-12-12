@@ -11,7 +11,7 @@ float state = 0.1;
 //RANDOM
 
 float rand_float(float max){
-    state = 1.999 * MIN(state, 1-state);
+    state = 1.977 * MIN(state, 1-state);
     return state;
 }
 

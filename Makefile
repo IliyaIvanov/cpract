@@ -8,4 +8,4 @@ installemsdk:
 	cd ../emsdk && emsdk install latest && emsdk activate latest && emsdk_env.bat && emcc project.c -s WASM=1 -o pge.html
 	npm i http-server -g
 runserver:
-	cd ../emrun pge.html
+	  cd ../emrun pge.html
