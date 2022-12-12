@@ -4,37 +4,7 @@
 #include <math.h>
 #include <stdlib.h>
 
-//struct xorshift32_state {
-//    uint32_t a;
-//};
-//
-//uint32_t xorshift32(struct xorshift32_state *state) {
-//    uint32_t x = state->a;
-//    x ^= x << 13;
-//    x ^= x >> 17;
-//    x ^= x << 5;
-//    return state->a = x;
-//}
-//
-//struct xorshift32_state *global_state = NULL;
-//
-//int last_max = 0;
-//
-//float rnd(int max) {
-//    if (global_state == NULL) {
-//        global_state = malloc(sizeof(struct xorshift32_state));
-//    }
-//    if (max == 0) {
-//        float value = global_state->a / (float)UINT32_MAX;
-//        return last_max*value;
-//    }
-//    last_max = max;
-//    global_state->a = xorshift32(global_state);
-//    float value = global_state->a / (float)UINT32_MAX;
-//    return value*max;
-//}
-
-struct xorshift32_state* global_state = NULL;
+/*struct xorshift32_state* global_state = NULL;
 
 struct xorshift32_state {
     uint32_t a;
@@ -56,6 +26,17 @@ float rnd(float upper) {
     }
     global_state->a = xorshift32(global_state);
     return (global_state->a / (float)UINT32_MAX) * upper;
+}*/
+
+#define MIN(X,Y) (((X) < (Y)) ? (X) : (Y))
+
+float state = 0.1;
+
+//RANDOM
+
+float rand_float(float max){
+    state = 1.999 * MIN(state, 1-state);
+    return state;
 }
 
 void tab(int value) {
@@ -146,7 +127,7 @@ n88:
     printf("THE COMPUTER WILL SELECT 20 NUMBERS AT RANDOM.  THE BELL");
     printf("TONE INDICATES IT IS IN THE PROCESS OF SELECTING THE NUMBERS.");
     for (int l = 1; l <= 20; l++){
-        N[l] = (int)(80 * rnd(1) + 1);
+        N[l] = (int)(80 * rand_float(1) + 1);
         M[l] = N[l];
     }
     // L = 21
@@ -155,7 +136,7 @@ n88:
             X = M[k];
             Y = M[j+1];
             if (X!=Y) goto n139;
-            M[j+1] = (int)(80 + rnd(1) + 1);
+            M[j+1] = (int)(80 + rand_float(1) + 1);
             Y = M[j+1];
         }
     }
