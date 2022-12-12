@@ -11,4 +11,4 @@
 
 ## Web
 
-![web](https://user-images.githubusercontent.com/71178640/207124857-311ad4b6-19ce-459f-8a00-5e3fc4579904.jpg)
+![web](https://user-images.githubusercontent.com/71178640/207125169-6a4167a6-eebc-486c-b68d-d3795b91a0c8.png)
